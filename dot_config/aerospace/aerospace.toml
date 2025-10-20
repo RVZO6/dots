@@ -1,0 +1,200 @@
+after-login-command = []
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+key-mapping.preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
+
+[mode.main.binding]
+cmd-ctrl-alt-1 = 'workspace 1'
+cmd-ctrl-alt-2 = 'workspace 2'
+cmd-ctrl-alt-3 = 'workspace 3'
+cmd-ctrl-alt-4 = 'workspace 4'
+cmd-ctrl-alt-5 = 'workspace 5'
+cmd-ctrl-alt-6 = 'workspace 6'
+cmd-ctrl-alt-7 = 'workspace 7'
+cmd-ctrl-alt-8 = 'workspace 8'
+cmd-ctrl-alt-9 = 'workspace 9'
+cmd-ctrl-alt-0 = 'workspace 10'
+
+cmd-ctrl-alt-shift-1 = 'move-node-to-workspace 1'
+cmd-ctrl-alt-shift-2 = 'move-node-to-workspace 2'
+cmd-ctrl-alt-shift-3 = 'move-node-to-workspace 3'
+cmd-ctrl-alt-shift-4 = 'move-node-to-workspace 4'
+cmd-ctrl-alt-shift-5 = 'move-node-to-workspace 5'
+cmd-ctrl-alt-shift-6 = 'move-node-to-workspace 6'
+cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
+cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
+cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+cmd-ctrl-alt-shift-0 = 'move-node-to-workspace 10'
+
+cmd-ctrl-alt-h = [
+  'focus --ignore-floating --boundaries-action stop left',
+  'move-mouse window-force-center',
+]
+cmd-ctrl-alt-l = [
+  'focus --ignore-floating --boundaries-action stop right',
+  'move-mouse window-force-center',
+]
+cmd-ctrl-alt-j = [
+  'focus --ignore-floating --boundaries-action stop down',
+  'move-mouse window-force-center',
+]
+cmd-ctrl-alt-k = [
+  'focus --ignore-floating --boundaries-action stop up',
+  'move-mouse window-force-center',
+]
+
+cmd-ctrl-alt-slash = 'layout tiles horizontal vertical'
+cmd-ctrl-alt-comma = 'layout accordion horizontal vertical'
+
+cmd-ctrl-alt-minus = 'resize smart -64'
+cmd-ctrl-alt-equal = 'resize smart +64'
+cmd-ctrl-alt-shift-minus = 'resize smart -128'
+cmd-ctrl-alt-shift-equal = 'resize smart +128'
+
+cmd-ctrl-alt-u = 'workspace prev'
+cmd-ctrl-alt-i = 'workspace next'
+cmd-ctrl-alt-shift-u = 'move-node-to-workspace prev'
+cmd-ctrl-alt-shift-i = 'move-node-to-workspace next'
+
+cmd-ctrl-alt-p = ['focus-monitor prev', 'move-mouse window-force-center']
+cmd-ctrl-alt-n = ['focus-monitor next', 'move-mouse window-force-center']
+cmd-ctrl-alt-shift-p = 'move-workspace-to-monitor prev'
+cmd-ctrl-alt-shift-n = 'move-workspace-to-monitor next'
+
+cmd-ctrl-alt-tab = 'workspace-back-and-forth'
+cmd-ctrl-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+cmd-ctrl-alt-shift-r = 'flatten-workspace-tree'
+cmd-ctrl-alt-f = 'fullscreen'
+cmd-ctrl-alt-v = 'layout floating tiling'
+cmd-ctrl-alt-c = 'move-mouse window-force-center'
+cmd-ctrl-alt-backtick = 'reload-config'
+
+cmd-ctrl-alt-shift-h = 'move left'
+cmd-ctrl-alt-shift-j = 'move down'
+cmd-ctrl-alt-shift-k = 'move up'
+cmd-ctrl-alt-shift-l = 'move right'
+
+
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xcode'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['layout tiling', 'move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'com.spikehd.dorion'
+run = ['layout floating', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = ['layout floating', 'move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'com.obsproject.obs-studio'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.colliderli.iina'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.ableton.live'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'UVR'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iWork.Pages'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iWork.Numbers'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iWork.Keynote'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'org.torproject.torbrowser'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'net.imput.helium'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'scrcpy'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.ryujinx.Ryujinx'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.m0k.transmission'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.QuickTimePlayerX'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = 'layout floating'

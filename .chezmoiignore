@@ -13,6 +13,7 @@
 .config/nvim/lazy-lock.json
 
 # Don't deploy macOS-specific paths to Linux
+.config/aerospace/
 Library/Application Support/nushell/
 {{ end }}
 
