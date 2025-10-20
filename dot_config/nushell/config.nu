@@ -16,6 +16,17 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 mkdir ($nu.data-dir | path join "vendor/autoload")
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
+# yazi integration
+def --env y [...args] {
+    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+    yazi ...$args --cwd-file $tmp
+    let cwd = (open $tmp)
+    if $cwd != "" and $cwd != $env.PWD {
+        cd $cwd
+    }
+    rm -fp $tmp
+}
+
 # Keybindings
 $env.config.keybindings = [
   {
