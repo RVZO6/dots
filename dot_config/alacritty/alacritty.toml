@@ -31,7 +31,7 @@ bindings = [
 ]
 
 # trying nu rn
-[shell]
+[terminal.shell]
 program = "/usr/bin/nu"
 args = ["-l"]
 
