@@ -11,10 +11,8 @@
 .config/nvm/lua/plugins/omarchy-theme-hotreload.lua
 .config/nvm/plugin/after/transparency.lua
 .config/nvm/lazy-lock.json
-{{ end }}
 
-{{ if ne .chezmoi.os "darwin" }}
-# Don't deploy macOS-specific paths to non-macOS
+# Don't deploy macOS-specific paths to Linux
 Library/Application Support/nushell/
 {{ end }}
 
