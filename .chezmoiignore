@@ -21,13 +21,3 @@ Library/Application Support/nushell/
 .config/alacritty/
 .config/wireplumber/
 {{ end }}
-
-{{ if ne .chezmoi.os "darwin" }}
-# Don't deploy macOS-specific paths to non-macOS
-Library/Application Support/nushell/
-{{ end }}
-
-{{ if eq .chezmoi.os "darwin" }}
-# Don't deploy Linux-specific files to macOS
-.config/wireplumber/
-{{ end }}
