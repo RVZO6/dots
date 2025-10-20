@@ -3,3 +3,6 @@ dot_config/nvim/lua/plugins/all-themes.lua
 dot_config/nvim/lua/plugins/omarchy-theme-hotreload.lua
 dot_config/nvim/plugin/after/transparency.lua
 dot_config/nvim/lazy-lock.json
+
+# lazyvim
+dot_config/nvim/lazyvim.json
