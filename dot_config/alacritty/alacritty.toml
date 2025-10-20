@@ -30,3 +30,8 @@ bindings = [
   { key = "Insert", mods = "Control", action = "Copy" }
 ]
 
+# trying nu rn
+[shell]
+program = "/usr/bin/nu"
+args = ["-l"]
+
