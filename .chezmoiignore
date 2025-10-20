@@ -2,6 +2,7 @@
 # Don't deploy macOS-specific files to Linux
 .config/nvim/lua/plugins/theme.lua
 .config/nvim/lua/plugins/ghostty.lua
+.config/nvim/lua/plugins/colorscheme.lua
 
 # Don't deploy these (Omarchy manages them locally)
 .config/nvim/lua/plugins/all-themes.lua
