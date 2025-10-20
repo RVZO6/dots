@@ -15,3 +15,19 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 # Zoxide integration
 mkdir ($nu.data-dir | path join "vendor/autoload")
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+
+# Keybindings
+$env.config.keybindings = [
+  {
+    modifier: control
+    keycode: char_f
+    mode: vi_insert
+    event: { send: executehostcommand, cmd: "~/.local/bin/tmux-sessionizer" }
+  }
+  {
+    modifier: control
+    keycode: char_f
+    mode: vi_normal
+    event: { send: executehostcommand, cmd: "~/.local/bin/tmux-sessionizer" }
+  }
+]
