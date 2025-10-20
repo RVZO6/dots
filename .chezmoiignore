@@ -10,3 +10,8 @@
 .config/nvim/plugin/after/transparency.lua
 .config/nvim/lazy-lock.json
 {{ end }}
+
+{{ if eq .chezmoi.os "darwin" }}
+# Don't deploy Linux-specific files to macOS
+.config/wireplumber/
+{{ end }}
