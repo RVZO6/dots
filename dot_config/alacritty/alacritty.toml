@@ -4,10 +4,19 @@ general.import = [ "~/.config/omarchy/current/theme/alacritty.toml" ]
 TERM = "xterm-256color"
 
 [font]
-normal = { family = "JetBrainsMono Nerd Font" }
-bold = { family = "JetBrainsMono Nerd Font" }
-italic = { family = "JetBrainsMono Nerd Font" }
-size = 12
+# ── Normal font ────────────────────────────────
+normal = { family = "JetBrainsMono Nerd Font", style = "SemiBold" }
+
+# ── Bold font ─────────────────────────────────
+bold = { family = "JetBrainsMono Nerd Font", style = "ExtraBold" }
+
+# ── Italic font ───────────────────────────────
+italic = { family = "JetBrainsMono Nerd Font", style = "ExtraBold Italic" }
+
+# ── Bold + Italic font ────────────────────────
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "ExtraBold Italic" }
+
+size = 14
 
 [window]
 padding.x = 14
@@ -16,7 +25,8 @@ decorations = "None"
 
 [keyboard]
 bindings = [
-{ key = "F11", action = "ToggleFullscreen" },
-{ key = "Insert", mods = "Shift", action = "Paste" },
-{ key = "Insert", mods = "Control", action = "Copy" }
+  { key = "F11", action = "ToggleFullscreen" },
+  { key = "Insert", mods = "Shift", action = "Paste" },
+  { key = "Insert", mods = "Control", action = "Copy" }
 ]
+
