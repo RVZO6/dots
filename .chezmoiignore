@@ -1,16 +1,16 @@
 {{ if eq .chezmoi.os "linux" }}
 # Don't deploy macOS-specific files to Linux
 .config/ghostty/
-.config/nvm/lua/plugins/theme.lua
-.config/nvm/lua/plugins/ghostty.lua
-.config/nvm/lua/plugins/colorscheme.lua
+.config/nvim/lua/plugins/theme.lua
+.config/nvim/lua/plugins/ghostty.lua
+.config/nvim/lua/plugins/colorscheme.lua
 
 # Don't deploy these (Omarchy manages them locally)
 .config/wireplumber/
-.config/nvm/lua/plugins/all-themes.lua
-.config/nvm/lua/plugins/omarchy-theme-hotreload.lua
-.config/nvm/plugin/after/transparency.lua
-.config/nvm/lazy-lock.json
+.config/nvim/lua/plugins/all-themes.lua
+.config/nvim/lua/plugins/omarchy-theme-hotreload.lua
+.config/nvim/plugin/after/transparency.lua
+.config/nvim/lazy-lock.json
 
 # Don't deploy macOS-specific paths to Linux
 Library/Application Support/nushell/
