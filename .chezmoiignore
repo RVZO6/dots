@@ -1,7 +1,6 @@
 {{ if eq .chezmoi.os "linux" }}
 # Don't deploy macOS-specific files to Linux
 .config/ghostty/
-.config/nvim/lua/plugins/theme.lua
 .config/nvim/lua/plugins/ghostty.lua
 .config/nvim/lua/plugins/colorscheme.lua
 
