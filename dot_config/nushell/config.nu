@@ -1,4 +1,5 @@
 #config.nu
+$env.SHELL = (which nu | first | get path)
 # Shell options
 $env.config.show_banner = false
 $env.config.edit_mode = "vi"
@@ -27,18 +28,18 @@ def --env y [...args] {
     rm -fp $tmp
 }
 
-# Keybindings
+# keys
 $env.config.keybindings = [
   {
     modifier: control
     keycode: char_f
-    mode: vi_insert
+    mode: [vi_insert vi_normal]
     event: { send: executehostcommand, cmd: "~/.local/bin/tmux-sessionizer" }
   }
   {
     modifier: control
-    keycode: char_f
-    mode: vi_normal
-    event: { send: executehostcommand, cmd: "~/.local/bin/tmux-sessionizer" }
+    keycode: char_o
+    mode: [vi_insert vi_normal]
+    event: { send: executehostcommand, cmd: "y" }
   }
 ]
