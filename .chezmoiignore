@@ -1,19 +1,18 @@
+# Always ignore lazy-lock.json
+.config/nvim/lazy-lock.json
+
 {{ if eq .chezmoi.os "linux" }}
-# Don't deploy macOS-specific files to Linux
+# Don't deploy macOS-specific files and paths to Linux
 .config/ghostty/
 .config/nvim/lua/plugins/ghostty.lua
 .config/nvim/lua/plugins/colorscheme.lua
+.config/aerospace/
+Library/Application Support/nushell/
 
-# Don't deploy these (Omarchy manages them locally)
-.config/wireplumber/
+# Don't deployfiles managed locally by Omarchy
 .config/nvim/lua/plugins/all-themes.lua
 .config/nvim/lua/plugins/omarchy-theme-hotreload.lua
 .config/nvim/plugin/after/transparency.lua
-.config/nvim/lazy-lock.json
-
-# Don't deploy macOS-specific paths to Linux
-.config/aerospace/
-Library/Application Support/nushell/
 {{ end }}
 
 {{ if eq .chezmoi.os "darwin" }}
