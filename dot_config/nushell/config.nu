@@ -32,6 +32,12 @@ def --env y [...args] {
 $env.config.keybindings = [
   {
     modifier: control
+    keycode: char_y
+    mode: [vi_insert vi_normal]
+    event: { send: Enter }
+  }
+  {
+    modifier: control
     keycode: char_f
     mode: [vi_insert vi_normal]
     event: { send: executehostcommand, cmd: "~/.local/bin/tmux-sessionizer" }
