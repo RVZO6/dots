@@ -1,5 +1,4 @@
 #config.nu
-$env.SHELL = (which nu | first | get path)
 # Shell options
 $env.config.show_banner = false
 $env.config.edit_mode = "vi"
