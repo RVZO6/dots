@@ -1,4 +1,3 @@
-#config.nu
 # Shell options
 $env.config.show_banner = false
 $env.config.edit_mode = "vi"
@@ -16,7 +15,7 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 mkdir ($nu.data-dir | path join "vendor/autoload")
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
-# yazi integration
+# Yazi integration
 def --env y [...args] {
     let tmp = (mktemp -t "yazi-cwd.XXXXXX")
     yazi ...$args --cwd-file $tmp
@@ -27,7 +26,7 @@ def --env y [...args] {
     rm -fp $tmp
 }
 
-# keys
+# Keybindings
 $env.config.keybindings = [
   {
     modifier: control
