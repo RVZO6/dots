@@ -13,6 +13,7 @@ Library/Application Support/nushell/
 .config/nvim/lua/plugins/all-themes.lua
 .config/nvim/lua/plugins/omarchy-theme-hotreload.lua
 .config/nvim/plugin/after/transparency.lua
+.config/nvim/lua/plugins/*lualine.lua
 {{ end }}
 
 {{ if eq .chezmoi.os "darwin" }}
