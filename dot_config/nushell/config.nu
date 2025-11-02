@@ -47,3 +47,4 @@ $env.config.keybindings = [
     event: { send: executehostcommand, cmd: "y" }
   }
 ]
+source $"($nu.home-path)/.cargo/env.nu"
