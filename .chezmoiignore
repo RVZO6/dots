@@ -1,23 +1,20 @@
+# Ignore tier directories except on matching systems
+macos/
+linux/
+
+{{ if eq .chezmoi.os "darwin" }}
+!macos/
+linux/
+{{ end }}
+
+{{ if eq .chezmoi.os "linux" }}
+!linux/
+macos/
+linux/omarchy/
+{{ if .omarchy }} !linux/omarchy/ {{ end }}
+{{ end }}
+
 # Always ignore lazy-lock.json
 .config/nvim/lazy-lock.json
 
-{{ if eq .chezmoi.os "linux" }}
-# Don't deploy macOS-specific files and paths to Linux
-.config/ghostty/
-.config/nvim/lua/plugins/ghostty.lua
-.config/nvim/lua/plugins/colorscheme.lua
-.config/aerospace/
-Library/Application Support/nushell/
 
-# Don't deployfiles managed locally by Omarchy
-.config/nvim/lua/plugins/all-themes.lua
-.config/nvim/lua/plugins/omarchy-theme-hotreload.lua
-.config/nvim/plugin/after/transparency.lua
-.config/nvim/lua/plugins/*lualine.lua
-{{ end }}
-
-{{ if eq .chezmoi.os "darwin" }}
-# Don't deploy Linux-specific files to macOS
-.config/alacritty/
-.config/wireplumber/
-{{ end }}
