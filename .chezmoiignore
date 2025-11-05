@@ -1,20 +1,36 @@
-# Ignore tier directories except on matching systems
-macos/
-linux/
+# Ignore all OS-specific directories by default
+{{- range (glob (printf "%s/*" .chezmoi.sourceDir)) }}
+{{- $path := . }}
+{{- $stat := stat $path }}
+{{- if and $stat.isDir (ne (base $path) "common") }}
+{{ base $path }}/
+{{- end }}
+{{- end }}
 
+# Handle OS-specific directories
 {{ if eq .chezmoi.os "darwin" }}
-!macos/
-linux/
+  !darwin/
+{{ else if eq .chezmoi.os "linux" }}
+  # Make the linux directory visible
+  !linux/
+
+  # Ignore all subdirectories within linux/ by default
+  linux/*/
+
+  # Always include the common linux files
+  !linux/common/
+
+  # Include the active profile or distro directory
+  {{ if .profile }}
+    !linux/{{ .profile }}/
+  {{ else }}
+    !linux/{{ .chezmoi.osRelease.id }}/
+  {{ end }}
+{{ else }}
+  # For other OSes, include the directory with the same name as the OS
+  !{{ .chezmoi.os }}/
 {{ end }}
 
-{{ if eq .chezmoi.os "linux" }}
-!linux/
-macos/
-linux/omarchy/
-{{ if .omarchy }} !linux/omarchy/ {{ end }}
-{{ end }}
 
 # Always ignore lazy-lock.json
 .config/nvim/lazy-lock.json
-
-
