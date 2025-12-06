@@ -201,4 +201,10 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.TV'
+check-further-callbacks = true
 run = 'layout floating'
