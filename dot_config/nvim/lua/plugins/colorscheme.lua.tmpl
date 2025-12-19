@@ -1,3 +1,4 @@
+{{- if ne .profile "desktop" -}}
 return {
 	{
 		"mellow-theme/mellow.nvim",
@@ -22,11 +23,5 @@ return {
 			end
 		end,
 	},
-	-- NOTE: fuck
-	-- {
-	--   "LazyVim/LazyVim",
-	--   opts = {
-	--     colorscheme = "mellow",
-	--   },
-	-- },
 }
+{{- end -}}
