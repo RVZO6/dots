@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.os "darwin" }}
 # Homebrew
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
@@ -10,7 +10,7 @@ set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_ANALYTICS_MESSAGE 1
 set -gx HOMEBREW_INSTALL_BADGE ""
 set -gx HOMEBREW_VERBOSE ""
-{{ end -}}
+{{- end }}
 
 # BOB PATH
 fish_add_path $HOME/.local/share/bob/nvim-bin
@@ -20,6 +20,7 @@ fish_add_path $HOME/.local/bin
 
 # Editor
 set -gx EDITOR nvim
+alias nvim-new='NVIM_APPNAME=nvim-new nvim'
 
 # Shell
 set -gx SHELL (status fish-path)
@@ -73,3 +74,6 @@ end
 if test -d "$HOME/.cargo/bin"
     fish_add_path "$HOME/.cargo/bin"
 end
+
+# FZF colors
+set -gx FZF_DEFAULT_OPTS "--color=fg:#cdcdcd --color=bg: --color=hl:#f3be7c --color=fg+:#aeaed1 --color=bg+: --color=hl+:#f3be7c --color=border:#606079 --color=header:#6e94b2 --color=gutter: --color=spinner:#7fa563 --color=info:#f3be7c --color=pointer:#aeaed1 --color=marker:#d8647e --color=prompt:#bb9dbd"

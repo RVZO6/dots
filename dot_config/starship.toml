@@ -3,13 +3,13 @@ command_timeout = 200
 format = "[$directory$git_branch$git_status]($style)$character"
 
 [character]
-error_symbol = "[✗](bold cyan)[ ❯](bold)"
+error_symbol = "[✗](bold red)[ ❯](bold)"
 success_symbol = "[❯](bold)"
 
 [directory]
 truncation_length = 2
 truncation_symbol = "…/"
-repo_root_style = "bold"
+repo_root_style = "bold green"
 repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 read_only = " "
 

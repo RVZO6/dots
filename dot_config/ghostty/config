@@ -5,7 +5,7 @@ font-style-bold = "ExtraBold"
 font-style-bold-italic = "ExtraBold Italic"
 
 background-opacity = 0.9
-theme = Mellow
+theme = Vague
 macos-titlebar-style = hidden
 window-padding-x = 14
 window-padding-y = 14
