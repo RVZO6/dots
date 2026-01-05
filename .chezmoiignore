@@ -5,7 +5,6 @@
 .config/nvim/lua/plugins/all-themes.lua
 .config/nvim/lua/plugins/omarchy-theme-hotreload.lua
 .config/nvim/plugin/after/transparency.lua
-.config/nvim/lua/plugins/*lualine.lua
 # lazyvim specific
 dot_config/nvim/lazyvim.json
 
