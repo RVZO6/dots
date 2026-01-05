@@ -1,0 +1,75 @@
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
+
+set -gx HOMEBREW_NO_AUTO_UPDATE 1
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx HOMEBREW_NO_INSECURE_REDIRECT 1
+set -gx HOMEBREW_NO_ENV_HINTS 1
+set -gx HOMEBREW_NO_ANALYTICS_MESSAGE 1
+set -gx HOMEBREW_INSTALL_BADGE ""
+set -gx HOMEBREW_VERBOSE ""
+{{ end -}}
+
+# BOB PATH
+fish_add_path $HOME/.local/share/bob/nvim-bin
+
+# Local bin PATH
+fish_add_path $HOME/.local/bin
+
+# Editor
+set -gx EDITOR nvim
+
+# Shell
+set -gx SHELL (status fish-path)
+
+# Fish options
+set -g fish_greeting # Disable banner
+
+# Vi mode
+set -g fish_key_bindings fish_vi_key_bindings
+set -g fish_cursor_insert line
+set -g fish_cursor_default block
+set -g fish_cursor_visual block
+set -g fish_cursor_replace_one underscore
+
+# Starship
+if command -v starship >/dev/null
+    starship init fish | source
+end
+
+# Zoxide
+if command -v zoxide >/dev/null
+    zoxide init fish | source
+end
+
+# Yazi
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file "$tmp"
+    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end
+
+# Keybindings
+function fish_user_key_bindings
+    # Ctrl+Y: Enter (as per nu config send: Enter)
+    bind -M insert \cy execute
+    bind \cy execute
+
+    # Ctrl+F: tmux-sessionizer
+    bind -M insert \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
+    bind \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
+
+    # Ctrl+O: yazi
+    bind -M insert \co "y; commandline -f repaint"
+    bind \co "y; commandline -f repaint"
+end
+
+# Cargo
+if test -d "$HOME/.cargo/bin"
+    fish_add_path "$HOME/.cargo/bin"
+end
