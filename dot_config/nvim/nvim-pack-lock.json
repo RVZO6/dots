@@ -20,10 +20,6 @@
       "rev": "f353e8c08c50f39e99a9ed474172df7eddd89b72",
       "src": "https://github.com/chentoast/marks.nvim"
     },
-    "mini.colors": {
-      "rev": "f43cab15ee0458acb13ac33a478b7e14fd4616eb",
-      "src": "https://github.com/nvim-mini/mini.colors"
-    },
     "mini.nvim": {
       "rev": "fb4ccfed03c1f0d9db702f93a65cb4c0c6c2832b",
       "src": "https://github.com/nvim-mini/mini.nvim"
