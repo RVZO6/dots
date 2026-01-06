@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" -}}
 # Homebrew
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
@@ -10,7 +10,7 @@ set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_ANALYTICS_MESSAGE 1
 set -gx HOMEBREW_INSTALL_BADGE ""
 set -gx HOMEBREW_VERBOSE ""
-{{- end }}
+{{- end -}}
 
 # BOB PATH
 fish_add_path $HOME/.local/share/bob/nvim-bin
@@ -20,7 +20,7 @@ fish_add_path $HOME/.local/bin
 
 # Editor
 set -gx EDITOR nvim
-alias nvim-new='NVIM_APPNAME=nvim-new nvim'
+alias nvim-old='NVIM_APPNAME=nvim-old nvim'
 
 # Shell
 set -gx SHELL (status fish-path)
@@ -53,6 +53,13 @@ function y
         builtin cd -- "$cwd"
     end
     rm -f -- "$tmp"
+end
+
+if command -v eza >/dev/null
+    alias ls='eza -lh --group-directories-first --icons=auto'
+    alias lsa='ls -a'
+    alias lt='eza --tree --level=2 --long --icons --git'
+    alias lta='lt -a'
 end
 
 # Keybindings
