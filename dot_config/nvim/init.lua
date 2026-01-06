@@ -67,6 +67,10 @@ map("n", "N", "Nzzzv")
 map("n", "<leader>a", ":edit #<CR>", { desc = "Jump to alternate file" })
 map("n", "<C-q>", ":copen<CR>", { silent = true, desc = "Open quickfix list" })
 map("n", "<leader>c", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
+map("n", "yp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p:~"))
+end, { desc = "Yank path with ~" })
+
 
 
 -------AUTOCOMMANDS--------
