@@ -20,17 +20,13 @@
       "rev": "f353e8c08c50f39e99a9ed474172df7eddd89b72",
       "src": "https://github.com/chentoast/marks.nvim"
     },
-    "mini.extra": {
-      "rev": "673633b97b64292c82d473ea2bd31b767dbe3907",
-      "src": "https://github.com/nvim-mini/mini.extra"
+    "mini.colors": {
+      "rev": "f43cab15ee0458acb13ac33a478b7e14fd4616eb",
+      "src": "https://github.com/nvim-mini/mini.colors"
     },
-    "mini.icons": {
-      "rev": "efc85e42262cd0c9e1fdbf806c25cb0be6de115c",
-      "src": "https://github.com/nvim-mini/mini.icons"
-    },
-    "mini.pick": {
-      "rev": "8cb40ee55dd156957b1116eded6135e6aeaa078b",
-      "src": "https://github.com/nvim-mini/mini.pick"
+    "mini.nvim": {
+      "rev": "fb4ccfed03c1f0d9db702f93a65cb4c0c6c2832b",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-lspconfig": {
       "rev": "0b38bc74487e73489624d61396af7805af9cc75f",

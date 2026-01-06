@@ -1,5 +1,5 @@
 -- pack clean - remove unused plugins
-map("n", "<leader>pc", function()
+Config.map("n", "<leader>pc", function()
 	local active_plugins = {}
 	local unused_plugins = {}
 
