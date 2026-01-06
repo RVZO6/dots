@@ -5,8 +5,8 @@ Config.later(function()
 
   require("render-markdown").setup({
     code = {
-      language_border = "",
-      disable_background = true
+      -- language_border = "",
+      -- disable_background = true
     },
   })
 end)
