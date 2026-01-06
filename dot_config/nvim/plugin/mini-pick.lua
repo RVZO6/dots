@@ -26,12 +26,12 @@ require('mini.extra').setup()
 map({ "n", "v", "x" }, "<leader><space>",
 	function() MiniPick.builtin.files() end, { desc = "Pick files" })
 
-map({ "n", "v", "x" }, "<leader>fc",
-	function()
-		MiniPick.builtin.files(nil, {
-			source = { cwd = vim.fn.stdpath('config'), name = 'Config' }
-		})
-	end, { desc = "[F]ind [c]onfig" })
+-- map({ "n", "v", "x" }, "<leader>fc",
+-- 	function()
+-- 		MiniPick.builtin.files(nil, {
+-- 			source = { cwd = vim.fn.stdpath('config'), name = 'Config' }
+-- 		})
+-- 	end, { desc = "[F]ind [c]onfig" })
 
 map({ "n", "v", "x" }, "<leader>sk",
 	function() MiniExtra.pickers.keymaps() end, { desc = "[S]earch [k]eymaps" })
