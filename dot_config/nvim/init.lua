@@ -12,7 +12,8 @@ vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.laststatus = 3
 vim.o.cursorcolumn = false
-vim.o.signcolumn = "no"
+vim.o.scrolloff = 8
+vim.o.signcolumn = "yes"
 vim.o.smartindent = true
 -- vim.o.mouse = "" -- disable mouse (vim hard mode)
 -- vim.o.clipboard = "unnamedplus"
@@ -38,7 +39,8 @@ map({ "n", "v", "x" }, "<leader>cf", vim.lsp.buf.format, { desc = "Format curren
 map("n", "<C-s>", "<cmd>write<CR>", { desc = "Save buffer" })
 map("n", "<leader>w", "<C-w>", { desc = "window management" })
 map({ "n", "v", "x" }, "<C-c>", "<cmd>quitall!<CR>", { desc = "Save buffer" })
-
+-- mark stuff
+map("n", "<C-m>", "`")
 -- tab management
 map({ "n", "t" }, "<Leader>t", "<Cmd>tabnew<CR>")
 map({ "n", "t" }, "<Leader>x", "<Cmd>tabclose<CR>")
@@ -85,3 +87,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		})
 	end,
 })
+
