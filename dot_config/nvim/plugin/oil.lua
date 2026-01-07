@@ -3,7 +3,7 @@ Config.later(function()
   vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, { load = true })
 
   -- config
-  local min_width = 20
+  local min_width_cols = 30
   local max_width = 0.3
   local max_height = 0.6
 
@@ -26,8 +26,8 @@ Config.later(function()
       max_height = max_height,
       -- use override to set min_width and keep centered
       override = function(conf)
-        if conf.width < min_width then
-          conf.width = min_width
+        if conf.width < min_width_cols then
+          conf.width = min_width_cols
           -- recalculate col to keep centered
           conf.col = math.floor((vim.o.columns - conf.width) / 2)
         end
