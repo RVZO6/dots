@@ -42,6 +42,7 @@ bind Y run-shell "tmux display-message -p '#{pane_current_path}' | tr -d '\n' | 
 bind -r l run-shell "~/.local/bin/tmux-sessionizer ~/downloads"
 bind -r L run-shell "~/.local/bin/tmux-sessionizer ~/documents"
 bind -r o run-shell "~/.local/bin/tmux-sessionizer ~/desktop"
+bind -r z run-shell "~/.local/bin/tmux-sessionizer ~/.local/share/chezmoi"
 
 # Status
 set -g status-position top
