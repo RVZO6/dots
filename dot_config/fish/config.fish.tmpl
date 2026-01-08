@@ -1,14 +1,16 @@
 # Homebrew
+
+{{- if eq .chezmoi.os "darwin" }}
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
-
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_NO_INSECURE_REDIRECT 1
 set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_ANALYTICS_MESSAGE 1
 set -gx HOMEBREW_INSTALL_BADGE ""
-set -gx HOMEBREW_VERBOSE ""# BOB PATH
+set -gx HOMEBREW_VERBOSE ""
+{{- end }}
 fish_add_path $HOME/.local/share/bob/nvim-bin
 
 # Local bin PATH
@@ -62,10 +64,6 @@ end
 
 # Keybindings
 function fish_user_key_bindings
-    # Ctrl+Y: Enter (as per nu config send: Enter)
-    bind -M insert \cy execute
-    bind \cy execute
-
     # Ctrl+F: tmux-sessionizer
     bind -M insert \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
     bind \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
