@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd -t d -d 1 . ~/projects ~/.config ~/desktop ~/vault | fzf)
+    selected=$(fd -t d -d 1 . ~/projects ~/.config ~/desktop ~/vault ~/vault/"Grade 12" | fzf)
 fi
 
 if [[ -z $selected ]]; then
