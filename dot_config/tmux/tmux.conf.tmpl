@@ -29,6 +29,8 @@ bind -r j previous-window
 bind -r k next-window
 bind g display-popup -d "#{pane_current_path}" -w 80% -h 80% -E "lazygit"
 bind Space last-window
+# ADD: change session directory
+# figure out how to rename session and change default dir for new windows and panes
 
 # linux support here
 {{- if eq .chezmoi.os "darwin" }}
