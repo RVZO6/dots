@@ -12,6 +12,10 @@
       "rev": "ad26a6c4f5be0c348612518fcb1b7116649e026f",
       "src": "https://github.com/xvzc/chezmoi.nvim"
     },
+    "chezmoi.vim": {
+      "rev": "73b30df35c6b645ebd2e6a440eea8463ef3c3f47",
+      "src": "https://github.com/alker0/chezmoi.vim"
+    },
     "lazydev.nvim": {
       "rev": "5231c62aa83c2f8dc8e7ba957aa77098cda1257d",
       "src": "https://github.com/folke/lazydev.nvim"

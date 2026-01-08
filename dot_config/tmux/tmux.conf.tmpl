@@ -28,20 +28,20 @@ bind X kill-window
 bind -r j previous-window
 bind -r k next-window
 bind g display-popup -d "#{pane_current_path}" -w 80% -h 80% -E "lazygit"
+bind Space last-window
 
-# Scratch popup (t for temporary)
-bind t run-shell "~/.local/bin/toggle-scratch"
+# linux support here
+{{- if eq .chezmoi.os "darwin" }}
+bind y run-shell "pwd | tr -d '\n' | pbcopy"
+bind Y run-shell "tmux display-message -p '#{pane_current_path}' | tr -d '\n' | pbcopy"
+{{- else }}
+bind y run-shell "pwd | tr -d '\n' | wl-copy"
+bind Y run-shell "tmux display-message -p '#{pane_current_path}' | tr -d '\n' | wl-copy"
+{{- end }}
 
-# Copy current working directory to clipboard (pbcopy for macOS)
-bind y run-shell "tmux display-message -p '#{pane_current_path}' | pbcopy"
-
-# Quick jump to common directories
-bind d run-shell "tmux neww -c ~/Downloads ~/.local/bin/tmux-sessionizer"
-bind e run-shell "tmux neww -c ~/Desktop ~/.local/bin/tmux-sessionizer"
-bind v run-shell "tmux neww -c ~/vault ~/.local/bin/tmux-sessionizer"
-bind c run-shell "tmux neww -c ~/.config ~/.local/bin/tmux-sessionizer"
-bind p run-shell "tmux neww -c ~/projects ~/.local/bin/tmux-sessionizer"
-bind o run-shell "tmux neww -c ~/Documents ~/.local/bin/tmux-sessionizer"
+bind -r l run-shell "~/.local/bin/tmux-sessionizer ~/downloads"
+bind -r L run-shell "~/.local/bin/tmux-sessionizer ~/documents"
+bind -r o run-shell "~/.local/bin/tmux-sessionizer ~/desktop"
 
 # Status
 set -g status-position top
