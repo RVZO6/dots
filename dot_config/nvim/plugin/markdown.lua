@@ -4,6 +4,9 @@ Config.later(function()
     'https://github.com/MeanderingProgrammer/render-markdown.nvim' }, { load = true })
 
   require("render-markdown").setup({
+		latex = {
+			enabled = true
+		},
     code = {
       -- language_border = "",
       -- disable_background = true

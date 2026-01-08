@@ -3,7 +3,7 @@ set -g mouse on
 set -g detach-on-destroy off
 
 # Terminal
-set -g default-terminal "tmux-256color"
+set -g default-terminal "xterm-ghostty"
 
 # Prefix
 unbind C-b
@@ -61,7 +61,4 @@ set -g status-right ""
 setw -g window-status-style "fg=brightblack"
 setw -g window-status-current-style "fg=green,bg=default,bold"
 
-# set -g pane-border-style 'fg=#404040'
-# set -g pane-active-border-style 'fg=cyan'
-# set -g message-style 'fg=cyan,bg=default,bold'
 set -g mode-style 'bold,fg=yellow'

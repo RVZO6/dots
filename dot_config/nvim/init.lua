@@ -1,4 +1,5 @@
 -- Bootstrap with mini
+-- technically not needed but its easier. will remove later maybe
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 
 -- Setup 'mini.deps' for access to `now` and `later` helpers
@@ -15,34 +16,35 @@ Config.later = MiniDeps.later
 
 -- options
 vim.g.mapleader = " "
-vim.o.swapfile = false
-vim.o.relativenumber = true
-vim.o.winborder = "single"
-vim.o.pumborder = "single"
-vim.o.cmdheight = 0
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.o.laststatus = 3
-vim.o.cursorcolumn = false
-vim.o.scrolloff = 8
-vim.o.signcolumn = "yes"
-vim.o.smartindent = true
+vim.opt.swapfile = false
+vim.opt.relativenumber = true
+vim.opt.winborder = "single"
+vim.opt.spell = true
+vim.opt.pumborder = "single"
+vim.opt.cmdheight = 0
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.laststatus = 3
+vim.opt.cursorcolumn = false
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.smartindent = true
 -- text wrapping -- maybe make only md/text files??
 vim.opt.wrap = true
 vim.opt.linebreak = true
--- vim.o.mouse = "" -- disable mouse (vim hard mode)
--- vim.o.clipboard = "unnamedplus"
+-- vim.opt.mouse = "" -- disable mouse (vim hard mode)
+-- vim.opt.clipboard = "unnamedplus"
 -- trying system clipboard as <space> + y/d
 -- consider have <leader>y = normal and y is +y???
 Config.map({ "n", "x" }, "<leader>y", '"+y')
 Config.map({ "n", "x" }, "<leader>d", '"+d')
-vim.o.ignorecase = true -- mainly for mini.pick
-vim.o.undofile = true
+vim.opt.ignorecase = true -- mainly for mini.pick
+vim.opt.undofile = true
 vim.opt.fillchars = {
 	eob = " ",
 }
 -- insert the recording status into the statusline
-vim.o.statusline = vim.o.statusline:gsub(
+vim.opt.statusline = vim.o.statusline:gsub(
 	"%%m",
 	"%%m %%{reg_recording()!=''?' @'.reg_recording():''}"
 )
@@ -91,6 +93,10 @@ end, { desc = "Yank path with ~" })
 
 -- spell suggest
 Config.map("n", "z=", "<Cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
+Config.map("n", "<leader>ts", function()
+    -- Use vim.wo (window option) because 'spell' is a window-local setting
+    vim.wo.spell = not vim.wo.spell
+end, { desc = "Toggle Spell Check" })
 
 -- paste above and below
 Config.map("n", "[p", '<Cmd>exe "put! " . v:register<CR>', { desc = "Paste Above" })
@@ -108,7 +114,7 @@ vim.api.nvim_create_autocmd('InsertEnter', {
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight yanked text",
 	callback = function()
-		vim.highlight.on_yank({
+		vim.hl.on_yank({
 			higroup = "DiffText",
 			timeout = 150,
 		})

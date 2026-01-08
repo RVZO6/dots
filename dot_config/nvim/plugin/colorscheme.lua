@@ -32,6 +32,10 @@ require("vague").setup({
 		hl.RenderMarkdownH4Bg       = { bg = "#384758" }
 		hl.RenderMarkdownH5Bg       = { bg = "#355615" }
 		hl.RenderMarkdownH6Bg       = { bg = "#72393a" }
+		hl.SpellBad                 = { sp = c.error, gui = "undercurl" }
+		hl.SpellCap                 = { sp = c.warning, gui = "undercurl" }
+		hl.SpellLocal               = { sp = c.hint, gui = "undercurl" }
+		hl.SpellRare                = { sp = c.plus, gui = "undercurl" }
 	end,
 })
 vim.cmd("colorscheme vague")
