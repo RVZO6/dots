@@ -20,6 +20,7 @@ vim.opt.swapfile = false
 vim.opt.relativenumber = true
 vim.opt.winborder = "single"
 vim.opt.spell = true
+vim.opt.splitright = true
 vim.opt.pumborder = "single"
 vim.opt.cmdheight = 0
 vim.opt.tabstop = 2
@@ -102,13 +103,14 @@ end, { desc = "Toggle Spell Check" })
 Config.map("n", "[p", '<Cmd>exe "put! " . v:register<CR>', { desc = "Paste Above" })
 Config.map("n", "]p", '<Cmd>exe "put "  . v:register<CR>', { desc = "Paste Below" })
 
-------AUTOCOMMANDS--------
+------AUTOCOMMANDS (mostly) --------
 
--- no hl on insert
+-- no hl on insert OR if press esc
 vim.api.nvim_create_autocmd('InsertEnter', {
 	pattern = '*',
 	command = 'set nohlsearch',
 })
+vim.keymap.set('n', '<Esc>', '<Cmd>nohlsearch<CR>', { desc = "Clear search highlights" })
 
 --hl yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -119,4 +121,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 			timeout = 150,
 		})
 	end,
+})
+
+-- help windows on right
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype == 'help' then
+      vim.cmd("wincmd L")
+    end
+  end,
 })

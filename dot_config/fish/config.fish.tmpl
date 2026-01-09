@@ -41,6 +41,9 @@ set -g fish_cursor_default block
 set -g fish_cursor_visual block
 set -g fish_cursor_replace_one underscore
 
+# Man pages
+set -gx MANPAGER 'nvim +Man!'
+
 # Starship
 if command -v starship >/dev/null
     starship init fish | source
@@ -73,10 +76,12 @@ function fish_user_key_bindings
     # Ctrl+F: tmux-sessionizer
     bind -M insert \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
     bind \cf "~/.local/bin/tmux-sessionizer; commandline -f repaint"
-
     # Ctrl+O: yazi
     bind -M insert \co "y; commandline -f repaint"
     bind \co "y; commandline -f repaint"
+		# vim mode shenanigans
+		bind -M insert \cy accept-autosuggestion
+    bind -M default \cy accept-autosuggestiond
 end
 
 # Cargo
