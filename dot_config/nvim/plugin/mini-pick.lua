@@ -45,3 +45,7 @@ Config.map({ "n", "v", "x" }, "<leader>sh",
 
 Config.map({ "n", "v", "x" }, "<leader>sH",
   function() MiniExtra.pickers.hl_groups() end, { desc = "[S]earch [H]ighlights" })
+
+Config.map({ "n", "v", "x"}, "<leader>sg", function ()
+	MiniPick.builtin.grep_live()
+end, { desc = "[S]earch [G]rep"})

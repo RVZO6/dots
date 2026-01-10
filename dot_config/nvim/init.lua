@@ -30,7 +30,7 @@ vim.opt.cursorcolumn = false
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.smartindent = true
--- text wrapping -- maybe make only md/text files??
+-- text wrapping -- maybe int make only md/text files??
 vim.opt.wrap = true
 vim.opt.linebreak = true
 -- vim.opt.mouse = "" -- disable mouse (vim hard mode)
@@ -55,7 +55,8 @@ vim.opt.statusline = vim.o.statusline:gsub(
 Config.map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
 Config.map({ "n", "v", "x" }, "<leader>cf", vim.lsp.buf.format, { desc = "Format current buffer" })
 Config.map("n", "<C-s>", "<cmd>write<CR>", { desc = "Save buffer" })
-Config.map("n", "<leader>w", "<C-w>", { desc = "window management" })
+-- remap = true makes it so that subsequent binds work, e.g. <leader>wd
+Config.map("n", "<leader>w", "<C-w>", { remap = true, desc = "window management" })
 Config.map({ "n", "v", "x" }, "<C-c>", "<cmd>quitall!<CR>", { desc = "Save buffer" })
 
 -- mark stuff
@@ -87,14 +88,14 @@ Config.map("n", "N", "Nzzzv")
 -- quick actions
 Config.map("n", "<leader>a", ":edit #<CR>", { desc = "Jump to alternate file" })
 Config.map("n", "<C-q>", ":copen<CR>", { silent = true, desc = "Open quickfix list" })
-Config.map("n", "<leader>c", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
+Config.map("n", "<leader>cs", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
 Config.map("n", "yp", function()
 	vim.fn.setreg("+", vim.fn.expand("%:p:~"))
 end, { desc = "Yank path with ~" })
 
 -- spell suggest
 Config.map("n", "z=", "<Cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
-Config.map("n", "<leader>ts", function()
+Config.map("n", "<leader>us", function()
     -- Use vim.wo (window option) because 'spell' is a window-local setting
     vim.wo.spell = not vim.wo.spell
 end, { desc = "Toggle Spell Check" })
@@ -103,7 +104,7 @@ end, { desc = "Toggle Spell Check" })
 Config.map("n", "[p", '<Cmd>exe "put! " . v:register<CR>', { desc = "Paste Above" })
 Config.map("n", "]p", '<Cmd>exe "put "  . v:register<CR>', { desc = "Paste Below" })
 
-------AUTOCOMMANDS (mostly) --------
+------AUTO COMMANDS (mostly) --------
 
 -- no hl on insert OR if press esc
 vim.api.nvim_create_autocmd('InsertEnter', {
