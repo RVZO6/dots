@@ -26,3 +26,7 @@ Library/Application Support/nushell/
 {{ end }}
 
 .DS_Store
+
+# Opencode
+.config/opencode/antigravity-accounts.json
+.config/opencode/node_modules/**
