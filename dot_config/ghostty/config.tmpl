@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" -}}
 font-family = "JetBrainsMono Nerd Font"
 font-style = "SemiBold"
 font-style-italic = "SemiBold Italic"
@@ -18,16 +19,9 @@ keybind="cmd+c=copy_to_clipboard"
 mouse-hide-while-typing = true
 scrollback-limit = 1000000
 
-# shell-integration = fish
 command = /opt/homebrew/bin/fish
 
 keybind = global:cmd+slash=toggle_quick_terminal
 quick-terminal-position = bottom
 quick-terminal-animation-duration = 0
-
-# custom-shader = shaders/cursor_smear.glsl
-# custom-shader = shaders/cursor_frozen.glsl
-# custom-shader = ./shaders/debug_cursor_animated.glsl
-# custom-shader = ./shaders/cursor_smear_fade.glsl
-# custom-shader = ./shaders/cusor_smear_fade_tapered.glsl
-# custom-shader = ./shaders/simple_animated_cursor.glsl
+{{- end -}}
