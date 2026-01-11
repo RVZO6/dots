@@ -59,7 +59,7 @@ else
 		vim.pack.add({ "https://github.com/vague-theme/vague.nvim" })
 	end)
 
-	Config.later(function()
+	Config.now(function()
 		require("vague").setup({
 			transparent = true,
 			on_highlights = function(hl, c)
