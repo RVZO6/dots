@@ -1,12 +1,16 @@
-local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim-mini-base16.lua")
-local has_omarchy = vim.fn.filereadable(theme_file) == 1
+local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim-base16.lua")
 
-if has_omarchy then
+if vim.fn.filereadable(theme_file) then
 	-- Omarchy System (Linux Desktop)
 	local palette = dofile(theme_file)
 
 	Config.now(function()
-		require("mini.base16").setup({ palette = palette })
+		require("mini.base16").setup({
+			palette = palette,
+			use_cterm = true
+		})
+		vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none' })
+		vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'none' })
 	end)
 
 	-- Auto-reload on theme change
