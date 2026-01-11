@@ -6,41 +6,7 @@ if has_omarchy then
 	local palette = dofile(theme_file)
 
 	Config.now(function()
-		vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 		require("mini.base16").setup({ palette = palette })
-	end)
-
-	Config.later(function()
-		local c = palette
-
-		-- Transparent statusline
-		vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-		vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
-		vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
-
-		-- Spell undercurl
-		for _, group in ipairs({
-			"SpellBad", "SpellCap", "SpellRare", "SpellLocal",
-			"DiagnosticUnderlineError", "DiagnosticUnderlineWarn",
-			"DiagnosticUnderlineInfo", "DiagnosticUnderlineHint",
-		}) do
-			local current = vim.api.nvim_get_hl(0, { name = group })
-			vim.api.nvim_set_hl(0, group, vim.tbl_extend("force", current, { undercurl = true }))
-		end
-
-		-- RenderMarkdown (basic setup)
-		vim.api.nvim_set_hl(0, "RenderMarkdownBullet", { fg = c.base0B })
-		vim.api.nvim_set_hl(0, "RenderMarkdownTableRow", { fg = c.base0E })
-		vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = c.base01 })
-
-		vim.api.nvim_set_hl(0, "@markup.strong", { fg = c.base0E, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.italic", { fg = c.base0E, italic = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.1", { fg = c.base08, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.2", { fg = c.base09, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.3", { fg = c.base0B, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.4", { fg = c.base0D, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.5", { fg = c.base0A, bold = true })
-		vim.api.nvim_set_hl(0, "@markup.heading.6", { fg = c.base0F, bold = true })
 	end)
 
 	-- Auto-reload on theme change
@@ -48,7 +14,6 @@ if has_omarchy then
 		pattern = theme_file,
 		callback = function()
 			package.loaded["mini.base16"] = nil
-			local palette = dofile(theme_file)
 			require("mini.base16").setup({ palette = palette })
 			vim.cmd("redraw!")
 		end,
