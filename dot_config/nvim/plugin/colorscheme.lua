@@ -1,6 +1,6 @@
 local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim-base16.lua")
 
-if vim.fn.filereadable(theme_file) then
+if vim.fn.filereadable(theme_file) == 1 then
 	-- Omarchy System (Linux Desktop)
 	local palette = dofile(theme_file)
 
