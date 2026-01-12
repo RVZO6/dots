@@ -2,7 +2,20 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd -t d -d 1 . ~/projects ~/.config ~/desktop ~/vault ~/vault/"Grade 12" | fzf)
+    session_dirs=(
+        ~
+        ~/projects
+        ~/.config
+        ~/desktop
+        ~/vault
+        ~/vault/"Grade 12"
+    )
+    selected=$(
+        {
+            printf '%s\n' "${session_dirs[@]}"
+            fd -t d -d 2 . "${session_dirs[@]}"
+        } | sort -u | fzf
+    )
 fi
 if [[ -z $selected ]]; then
     exit 0
