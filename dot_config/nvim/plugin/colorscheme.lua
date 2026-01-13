@@ -1,27 +1,73 @@
-local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim-base16.lua")
+local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim.lua")
+local config_file = vim.fn.expand("~/.config/nvim/plugin/colorscheme.lua")
+
+-- Store last modification time to detect external changes
+local last_mtime = 0
+
+--- Apply aether theme with current palette
+--- This function contains all of logic needed to load/reload the theme
+local function apply_aether_theme()
+	-- Reloads palette file
+	local palette = dofile(theme_file)
+
+	-- Clear and reload aether
+	package.loaded["aether"] = nil
+	package.loaded["aether.config"] = nil
+
+	-- Setup with new colors
+	require("aether").setup({
+		transparent = false,
+		colors = palette,
+	})
+
+	-- Apply colorscheme
+	vim.cmd.colorscheme("aether")
+
+	-- Re-apply custom highlights
+	vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none' })
+	vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'none' })
+
+	-- Update mtime tracker using vim.fn.getftime
+	last_mtime = vim.fn.getftime(theme_file)
+end
+
+--- Check if theme file has been modified externally
+local function check_external_changes()
+	local current_mtime = vim.fn.getftime(theme_file)
+	if current_mtime > last_mtime then
+		apply_aether_theme()
+	end
+end
 
 if vim.fn.filereadable(theme_file) == 1 then
 	-- Omarchy System (Linux Desktop)
-	local palette = dofile(theme_file)
-
 	Config.now(function()
-		require("mini.base16").setup({
-			palette = palette,
-			use_cterm = true
+		vim.pack.add({
+			{
+				src = "https://github.com/bjarneo/aether.nvim",
+				version = "v2"
+			}
 		})
-		vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none' })
-		vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'none' })
-	end)
 
-	-- Auto-reload on theme change
-	vim.api.nvim_create_autocmd({ "BufWritePost", "FileChangedShellPost" }, {
-		pattern = theme_file,
-		callback = function()
-			package.loaded["mini.base16"] = nil
-			require("mini.base16").setup({ palette = palette })
-			vim.cmd("redraw!")
-		end,
-	})
+		-- Initial load
+		apply_aether_theme()
+
+		-- Watch for internal changes (when Neovim writes our config)
+		vim.api.nvim_create_autocmd("BufWritePost", {
+			pattern = config_file,
+			callback = function()
+				apply_aether_theme()
+			end,
+			desc = "Reload aether theme when config file is saved (internal)"
+		})
+
+		-- Watch for external changes (when Omarchy updates theme)
+		-- This triggers on FocusGained to avoid constant polling
+		vim.api.nvim_create_autocmd("FocusGained", {
+			callback = check_external_changes,
+			desc = "Check for external theme changes when focus is gained"
+		})
+	end)
 else
 	-- macOS / Non-Omarchy (Vague Theme)
 	Config.now(function()
