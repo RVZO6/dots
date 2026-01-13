@@ -1,0 +1,27 @@
+[[session]]
+name = "Downloads"
+path = "~/Downloads"
+
+[[session]]
+name = "Documents"
+path = "~/Documents"
+
+[[session]]
+name = "Desktop"
+path = "~/Desktop"
+
+[[session]]
+name = "Config"
+path = "~/.config"
+
+[[session]]
+name = "Dotfiles"
+path = "~/.local/share/chezmoi"
+
+[[session]]
+name = "Vault"
+path = "~/vault"
+
+[[session]]
+name = "Grade 12"
+path = "~/vault/Grade 12"

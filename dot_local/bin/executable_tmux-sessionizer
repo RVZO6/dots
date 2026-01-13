@@ -1,36 +1,39 @@
 #!/usr/bin/env bash
-if [[ $# -eq 1 ]]; then
+
+if ! command -v sesh >/dev/null 2>&1; then
+    echo "sesh is not installed. Install with: brew install sesh / yay -S fzf" >&2
+    exit 1
+fi
+
+if [[ $1 == "--new" ]]; then
+    project_name=$2
+    if [[ -z $project_name ]]; then
+        exit 0
+    fi
+    project_dir="$HOME/Projects/$project_name"
+    mkdir -p "$project_dir"
+    if command -v zoxide >/dev/null 2>&1; then
+        zoxide add "$project_dir" >/dev/null 2>&1 || true
+    fi
+    exec sesh connect "$project_dir"
+fi
+
+if [[ $# -ge 1 ]]; then
     selected=$1
 else
-    session_dirs=(
-        ~
-        ~/projects
-        ~/.config
-        ~/desktop
-        ~/vault
-        ~/vault/"Grade 12"
-    )
-    selected=$(
-        {
-            printf '%s\n' "${session_dirs[@]}"
-            fd -t d -d 2 . "${session_dirs[@]}"
-        } | sort -u | fzf
-    )
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo "fzf is not installed. Install with: brew install fzf / yay -S fzf" >&2
+        exit 1
+    fi
+    selected=$(sesh list | fzf)
 fi
+
 if [[ -z $selected ]]; then
     exit 0
 fi
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s "$selected_name" -c "$selected"
-    exit 0
+
+if [[ -d $selected ]] && command -v zoxide >/dev/null 2>&1; then
+    zoxide add "$selected" >/dev/null 2>&1 || true
 fi
-if ! tmux has-session -t="$selected_name" 2> /dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
-fi
-if [[ -z $TMUX ]]; then
-    tmux attach -t "$selected_name"
-else
-    tmux switch-client -t "$selected_name"
-fi
+
+exec sesh connect "$selected"
