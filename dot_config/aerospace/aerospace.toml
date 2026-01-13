@@ -93,7 +93,7 @@ cmd-ctrl-alt-shift-l = 'move right'
 
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.dt.Xcode'
@@ -101,11 +101,15 @@ run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = ['layout tiling', 'move-node-to-workspace 2']
+run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.spikehd.dorion'
 run = ['layout floating', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
