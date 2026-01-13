@@ -89,18 +89,23 @@ Config.map("n", "N", "Nzzzv")
 Config.map("n", "<leader>a", ":edit #<CR>", { desc = "Jump to alternate file" })
 Config.map("n", "<C-q>", ":copen<CR>", { silent = true, desc = "Open quickfix list" })
 Config.map("n", "<leader>cs", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
-Config.map("n", "<leader>ca", function ()
-vim.lsp.buf.code_action()	
+Config.map("n", "<leader>ca", function()
+	vim.lsp.buf.code_action()
 end, { desc = "Code Action" })
 Config.map("n", "yp", function()
 	vim.fn.setreg("+", vim.fn.expand("%:p:~"))
 end, { desc = "Yank path with ~" })
+Config.map('i', '<C-v>', '<C-r><C-p>"', {
+	noremap = true,
+	silent = true,
+	desc = "Paste from default register with fixed indentation"
+})
 
 -- spell suggest
 Config.map("n", "z=", "<Cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
 Config.map("n", "<leader>us", function()
-    -- Use vim.wo (window option) because 'spell' is a window-local setting
-    vim.wo.spell = not vim.wo.spell
+	-- Use vim.wo (window option) because 'spell' is a window-local setting
+	vim.wo.spell = not vim.wo.spell
 end, { desc = "Toggle Spell Check" })
 
 -- paste above and below
@@ -129,10 +134,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- help windows on right
 vim.api.nvim_create_autocmd("BufWinEnter", {
-  pattern = "*",
-  callback = function()
-    if vim.bo.buftype == 'help' then
-      vim.cmd("wincmd L")
-    end
-  end,
+	pattern = "*",
+	callback = function()
+		if vim.bo.buftype == 'help' then
+			vim.cmd("wincmd L")
+		end
+	end,
 })
