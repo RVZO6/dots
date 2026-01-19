@@ -12,7 +12,7 @@
 - **Trash:** Prefer `trash` over `rm` when possible for the ability to undo actions.
 
 ## User Configuration
-- **Chezmoi**: The user uses Chezmoi to manage their dotfiles. Make sure to edit these files in their respective chezmoi directory. The list of their managed files is here:
+- **Chezmoi**: The user uses Chezmoi to manage their dotfiles. Make sure to edit these files in their respective chezmoi directory, or, more simply, just re-add/add the file after editing the deployed version. This may not always work for templated files. The list of their managed files is here:
 
 {{ output "chezmoi" "managed" "-i" "files" "-p" "absolute" }}
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if ! command -v sesh >/dev/null 2>&1; then
-    echo "sesh is not installed. Install with: brew install sesh / yay -S fzf" >&2
+    echo "sesh is not installed. Install with: brew install sesh / yay -S sesh" >&2
     exit 1
 fi
 

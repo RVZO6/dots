@@ -11,6 +11,9 @@ set -gx HOMEBREW_INSTALL_BADGE ""
 set -gx HOMEBREW_VERBOSE ""
 {{- end }}
 
+# bun
+fish_add_path $HOME/.bun/bin
+
 # bob nvim path
 fish_add_path $HOME/.local/share/bob/nvim-bin
 
@@ -28,6 +31,12 @@ alias c='chezmoi'
 alias ce='chezmoi edit'
 alias ca='chezmoi apply'
 alias cra='chezmoi re-add'
+
+# yt-dlp
+alias yta='yt-dlp -x --audio-format mp3 --audio-quality 0'
+alias ytv='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"'
+alias ytp='yt-dlp -x --audio-format mp3 --yes-playlist'
+alias ytam='yt-dlp -x --audio-format mp3 --audio-quality 0 --add-metadata --embed-thumbnail'
 
 # Shell
 set -gx SHELL (status fish-path)
@@ -52,6 +61,8 @@ end
 
 # Zoxide
 if command -v zoxide >/dev/null
+		set -gx _ZO_RESOLVE_SYMLINKS 1
+		set -gx _ZO_CASE_INSENSITIVE 1
     zoxide init fish | source
 end
 
