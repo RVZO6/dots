@@ -15,6 +15,7 @@ Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
 Config.later = MiniDeps.later
 
 -- options
+vim.opt.termguicolors = false
 vim.g.mapleader = " "
 vim.opt.swapfile = false
 vim.opt.relativenumber = true
