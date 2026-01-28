@@ -24,7 +24,9 @@
 		},
 		"grep": {
 			"type": "remote",
-			"url": "https://mcp.grep.app"
+			"url": "https://mcp.grep.app",
+			"enabled": true,
+			"oauth": false
 		},
 		"exa": {
 			"type": "remote",
@@ -36,7 +38,7 @@
 		"external_directory": {
 			"/tmp/**": "allow",
 			"~/.config/opencode/**": "allow"
-		},
+		}
 	},
 	"plugin": [
 		"opencode-antigravity-auth@beta"
