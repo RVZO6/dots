@@ -101,6 +101,8 @@ Config.map('i', '<C-v>', '<C-r><C-p>"', {
 	desc = "Paste from default register with fixed indentation"
 })
 
+Config.map({'n', 't'}, '<C-_>', function() vim.cmd(vim.bo.buftype == 'terminal' and 'close' or 'below 10split | terminal') end)
+
 -- spell suggest
 Config.map("n", "z=", "<Cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
 Config.map("n", "<leader>us", function()

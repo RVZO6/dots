@@ -217,3 +217,8 @@ run = 'layout floating'
 if.app-id = 'com.robtop.geometryjump'
 check-further-callbacks = true
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.aone.keka'
+check-further-callbacks = true
+run = 'layout floating'
