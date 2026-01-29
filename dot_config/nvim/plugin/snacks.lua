@@ -5,11 +5,6 @@ Config.later(function()
   require("snacks").setup({
     picker = {
       layout = { fullscreen = true },
-      win = {
-        input = { border = "top", title = "{title} {live} {flags}", title_pos = "center" },
-        list = { border = "top" },
-        preview = { border = "left" },
-      },
     },
   })
 
