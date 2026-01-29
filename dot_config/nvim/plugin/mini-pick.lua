@@ -1,2 +1,0 @@
--- mini.pick (disabled)
--- Replaced by telescope.nvim in `plugin/telescope.lua`.

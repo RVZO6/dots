@@ -1,5 +1,5 @@
 -- snacks.nvim picker
-Config.now(function()
+Config.later(function()
 	vim.pack.add({ "https://github.com/folke/snacks.nvim" }, { load = true })
 
   require("snacks").setup({
