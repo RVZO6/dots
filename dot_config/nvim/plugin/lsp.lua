@@ -1,6 +1,8 @@
 -- LSP
 Config.later(function()
   vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' }, { load = true })
+	-- for json
+  vim.pack.add({ 'https://github.com/b0o/SchemaStore.nvim' }, { load = true })
 
   -- LSP servers to enable
   local lsp_servers = { "lua_ls", "tailwindcss", "vtsls", "bashls", "jsonls", "clangd", "gopls", "basedpyright" }
