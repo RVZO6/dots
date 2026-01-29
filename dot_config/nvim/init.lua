@@ -1,3 +1,17 @@
+-- Speed up module loading (0.9+; best when enabled very early)
+if vim.loader then
+	vim.loader.enable()
+end
+
+-- Disable unused built-in runtime plugins for faster startup
+vim.g.loaded_gzip = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_tohtml = 1
+vim.g.loaded_tutor = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Adding mini deps only because of the now and later functions. Useless for everything else. Hopefully we'll replace soon.
 vim.pack.add({ "https://github.com/nvim-mini/mini.deps" })
 
@@ -53,7 +67,10 @@ vim.opt.statusline = vim.o.statusline:gsub(
 -------KEY MAPS-------
 
 Config.map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
-Config.map({ "n", "v", "x" }, "<leader>cf", vim.lsp.buf.format, { desc = "Format current buffer" })
+-- Wrap to avoid forcing LSP to load during startup
+Config.map({ "n", "v", "x" }, "<leader>cf", function()
+	vim.lsp.buf.format()
+end, { desc = "Format current buffer" })
 Config.map("n", "<C-s>", "<cmd>write<CR>", { desc = "Save buffer" })
 -- remap = true makes it so that subsequent binds work, e.g. <leader>wd
 Config.map("n", "<leader>w", "<C-w>", { remap = true, desc = "window management" })

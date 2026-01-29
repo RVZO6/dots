@@ -16,3 +16,8 @@ vim.pack.add({
 However, I'm holding off for now. There are rumors that Neovim 0.12+ might upstream the `now()`/`later()` concept natively (possibly `vim.fn.later` or similar startup scheduling). If that happens, I'd rather migrate directly to the native API than do an intermediate switch to `lze`. I need to keep an eye on Neovim changelogs for native "deferred loading" primitives.
 
 Relevant Github Issue: [https://github.com/neovim/neovim/issues/35562]
+
+
+## Picker
+Switched from mini pick -> telescope (sizing issues) -> fzf-lua -> snacks (initial load issues)
+would love to get fzf lua working, if not snacks is okay and telescope if needed ecosystem. just want the best and lightest

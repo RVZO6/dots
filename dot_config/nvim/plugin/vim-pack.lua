@@ -83,3 +83,7 @@ Config.map("n", "<leader>pc", pack_clean, { desc = "pack clean" })
 
 -- pack list - show current plugins (uses vim.ui.select; telescope-ui-select will render it)
 Config.map("n", "<leader>pl", pack_list, { desc = "pack list" })
+
+Config.map("n", "<leader>pu", function()
+	vim.pack.update()
+end, { desc = "pack update" })
