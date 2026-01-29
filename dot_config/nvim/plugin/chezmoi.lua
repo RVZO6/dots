@@ -9,5 +9,5 @@ Config.later(function()
 end)
 
 Config.map("n", "<leader>fc", function()
-	require("chezmoi.pick").telescope()
+	require("chezmoi.pick").snacks()
 end, { desc = "find chezmoi" })
