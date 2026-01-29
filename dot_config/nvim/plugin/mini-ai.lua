@@ -1,6 +1,6 @@
 -- mini.ai
 Config.later(function()
-	vim.pack.add({"https://github.com/nvim-mini/mini.ai"})
+	vim.pack.add({"https://github.com/nvim-mini/mini.ai", "https://github.com/nvim-mini/mini.extra" })
   local ai = require("mini.ai")
   local extra = require("mini.extra")
   ai.setup({
