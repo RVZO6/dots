@@ -46,5 +46,7 @@ else
 		vim.cmd.colorscheme("vague")
 		vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
 		vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "StatusLineTermNC", { bg = "NONE" })
 	end)
 end

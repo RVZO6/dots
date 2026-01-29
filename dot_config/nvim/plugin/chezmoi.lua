@@ -9,5 +9,5 @@ Config.later(function()
 end)
 
 Config.map("n", "<leader>fc", function()
-	require("chezmoi.pick").mini()
+	require("chezmoi.pick").telescope()
 end, { desc = "find chezmoi" })

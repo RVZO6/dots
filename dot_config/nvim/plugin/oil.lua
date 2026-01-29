@@ -1,6 +1,7 @@
 -- oil.nvim
 Config.later(function()
-	vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, { load = true })
+	vim.pack.add({ "https://github.com/stevearc/oil.nvim", "https://github.com/nvim-tree/nvim-web-devicons" },
+		{ load = true })
 
 	-- setup
 	local oil = require("oil")
@@ -23,9 +24,8 @@ Config.later(function()
 	})
 
 	-- keymaps
-	Config.map("n", "<leader>e", function()
-		oil.open_float()
-	end, { desc = "Open parent directory" })
+	-- removed float temp
+	Config.map("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open parent directory" })
 end)
 
 -- Recenter oil floating windows on resize

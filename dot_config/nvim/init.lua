@@ -1,6 +1,5 @@
--- Bootstrap with mini
--- technically not needed but its easier. will remove later maybe
-vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
+-- Adding mini deps only because of the now and later functions. Useless for everything else. Hopefully we'll replace soon.
+vim.pack.add({ "https://github.com/nvim-mini/mini.deps" })
 
 -- Setup 'mini.deps' for access to `now` and `later` helpers
 require("mini.deps").setup()
@@ -15,7 +14,7 @@ Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
 Config.later = MiniDeps.later
 
 -- options
-vim.opt.termguicolors = false
+-- vim.opt.termguicolors = false
 vim.g.mapleader = " "
 vim.opt.swapfile = false
 vim.opt.relativenumber = true
@@ -40,7 +39,7 @@ vim.opt.linebreak = true
 -- consider have <leader>y = normal and y is +y???
 Config.map({ "n", "x" }, "<leader>y", '"+y')
 Config.map({ "n", "x" }, "<leader>d", '"+d')
-vim.opt.ignorecase = true -- mainly for mini.pick
+vim.opt.ignorecase = true -- mainly for fuzzy finders
 vim.opt.undofile = true
 vim.opt.fillchars = {
 	eob = " ",
@@ -102,10 +101,15 @@ Config.map('i', '<C-v>', '<C-r><C-p>"', {
 	desc = "Paste from default register with fixed indentation"
 })
 
-Config.map({'n', 't'}, '<C-_>', function() vim.cmd(vim.bo.buftype == 'terminal' and 'close' or 'below 10split | terminal') end)
+Config.map({'n', 't'}, '<C-_>', function() 
+  if vim.bo.buftype == 'terminal' then 
+    vim.cmd('close') 
+  else 
+    vim.cmd('below 10split | terminal')
+    vim.api.nvim_input('i')
+  end
+end)
 
--- spell suggest
-Config.map("n", "z=", "<Cmd>Pick spellsuggest<CR>", { desc = "Spelling suggestions" })
 Config.map("n", "<leader>us", function()
 	-- Use vim.wo (window option) because 'spell' is a window-local setting
 	vim.wo.spell = not vim.wo.spell
