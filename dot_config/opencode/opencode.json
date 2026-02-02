@@ -1,18 +1,6 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"mcp": {
-		// "github": {
-		// 	"type": "local",
-		// 	"command": [
-		// 		"npx",
-		// 		"-y",
-		// 		"@modelcontextprotocol/server-github"
-		// 	],
-		// 	"environment": {
-		// 		"GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PAT}"
-		// 	},
-		// 	"enabled": true
-		// },
 		"github": {
 			"type": "remote",
 			"url": "https://api.githubcopilot.com/mcp/",
@@ -40,11 +28,23 @@
 			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check",
 			"oauth": false
 		},
+		"ssh": {
+			"type": "local",
+			"command": [
+				"bunx",
+				"-y",
+				"ssh-mcp",
+				"--host=CHANGEME",
+				"--user=CHANGEME",
+				"--password=CHANGEME",
+				"--timeout=60000",
+				"--disableSudo"
+			],
+		},
 	},
 	"permission": {
 		"external_directory": {
-			"/tmp/**": "allow",
-			"~/.config/opencode/**": "allow"
+			"/tmp/**": "allow"
 		}
 	},
 	"plugin": [

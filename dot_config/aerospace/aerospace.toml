@@ -156,6 +156,10 @@ if.app-id = 'com.apple.iWork.Keynote'
 run = 'move-node-to-workspace 6'
 
 [[on-window-detected]]
+if.app-id = 'com.openai.atlas'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
 if.app-id = 'org.torproject.torbrowser'
 run = 'move-node-to-workspace 7'
 

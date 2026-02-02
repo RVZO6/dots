@@ -117,15 +117,18 @@ Config.map('i', '<C-v>', '<C-r><C-p>"', {
 	silent = true,
 	desc = "Paste from default register with fixed indentation"
 })
+-- enter normal mode easier in terminal but this kinda sucks
+Config.map('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
-Config.map({'n', 't'}, '<C-_>', function() 
-  if vim.bo.buftype == 'terminal' then 
-    vim.cmd('close') 
-  else 
-    vim.cmd('below 10split | terminal')
-    vim.api.nvim_input('i')
-  end
-end)
+
+-- Config.map({'n', 't'}, '<C-_>', function() 
+--   if vim.bo.buftype == 'terminal' then 
+--     vim.cmd('close') 
+--   else 
+--     vim.cmd('below 10split | terminal')
+--     vim.api.nvim_input('i')
+--   end
+-- end)
 
 Config.map("n", "<leader>us", function()
 	-- Use vim.wo (window option) because 'spell' is a window-local setting

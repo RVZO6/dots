@@ -44,7 +44,7 @@ bind g display-popup -d "#{pane_current_path}" -w 80% -h 80% -E "lazygit"
 bind Tab last-window
 bind Space switch-client -l
 bind + resize-pane -Z
-# ADD: change session directory
+bind S command-prompt "new-session -s '%%' -c ~"
 # figure out how to rename session and change default dir for new windows and panes
 
 {{- if eq .chezmoi.os "darwin" }}
@@ -75,4 +75,7 @@ set -g status-right ""
 setw -g window-status-style "fg=brightblack"
 setw -g window-status-current-style "fg=green,bg=default,bold"
 
-set -g mode-style 'bold,fg=yellow'
+set -g mode-style 'bold,fg=yellow, bg=default'
+set -g message-style 'bold,fg=yellow,bg=default'
+set -g message-command-style 'bold,fg=yellow,bg=default'
+set -ga terminal-overrides ',*:Cs=\E]12;%p1%s\007:Cr=\E]112\007'
