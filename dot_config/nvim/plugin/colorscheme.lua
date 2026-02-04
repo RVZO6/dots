@@ -8,6 +8,7 @@ if is_omarchy then
 		vim.cmd.colorscheme("ansi")
 		vim.api.nvim_set_hl(0, 'Normal', {})
 		vim.api.nvim_set_hl(0, 'NormalFloat', { ctermfg = 15 })
+		vim.opt.termguicolors = false
 		-- vim.cmd.colorscheme("ansi-custom")
 	end)
 else
