@@ -12,20 +12,48 @@ vim.g.loaded_tutor = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Adding mini deps only because of the now and later functions. Useless for everything else. Hopefully we'll replace soon.
-vim.pack.add({ "https://github.com/nvim-mini/mini.deps" })
-
--- Setup 'mini.deps' for access to `now` and `later` helpers
-require("mini.deps").setup()
+-- Install mini.nvim for `mini.misc` loading helpers.
+vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 
 -- Define global config table for sharing between modules
 _G.Config = {}
 Config.map = vim.keymap.set
 
--- Define lazy helpers
-Config.now = MiniDeps.now
-Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
-Config.later = MiniDeps.later
+-- Define lazy helpers via mini.misc, following MiniMax's pattern.
+local misc = require("mini.misc")
+Config.now = function(f)
+	misc.safely("now", f)
+end
+Config.later = function(f)
+	misc.safely("later", f)
+end
+Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
+
+local function safe_config_call(name, fn, ...)
+	local ok, err = pcall(fn, ...)
+	if ok then
+		return
+	end
+
+	vim.schedule(function()
+		vim.notify(("Config step failed (%s): %s"):format(name, err), vim.log.levels.ERROR)
+	end)
+end
+
+Config.on_event = function(event, fn, opts)
+	local options = vim.tbl_extend("force", {
+		once = true,
+		callback = function(args)
+			safe_config_call("event:" .. event, fn, args)
+		end,
+	}, opts or {})
+	vim.api.nvim_create_autocmd(event, options)
+end
+
+Config.on_filetype = function(filetypes, fn, opts)
+	local options = vim.tbl_extend("force", { pattern = filetypes }, opts or {})
+	Config.on_event("FileType", fn, options)
+end
 
 -- options
 -- vim.opt.termguicolors = false
@@ -69,9 +97,21 @@ vim.opt.statusline = vim.o.statusline:gsub(
 Config.map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
 -- Wrap to avoid forcing LSP to load during startup
 Config.map({ "n", "v", "x" }, "<leader>cf", function()
-	vim.lsp.buf.format()
+	if type(Config.ensure_conform) == "function" then
+		Config.ensure_conform()
+	end
+
+	local ok, conform = pcall(require, "conform")
+	if ok then
+		conform.format({ async = true, lsp_format = "fallback" })
+		return
+	end
+
+	if type(Config.ensure_lsp) == "function" then
+		Config.ensure_lsp()
+	end
+	vim.lsp.buf.format({ async = true })
 end, { desc = "Format current buffer" })
-Config.map("n", "<C-s>", "<cmd>write<CR>", { desc = "Save buffer" })
 -- remap = true makes it so that subsequent binds work, e.g. <leader>wd
 Config.map("n", "<leader>w", "<C-w>", { remap = true, desc = "window management" })
 Config.map({ "n", "v", "x" }, "<C-c>", "<cmd>quitall!<CR>", { desc = "Save buffer" })
@@ -107,6 +147,9 @@ Config.map("n", "<leader>a", ":edit #<CR>", { desc = "Jump to alternate file" })
 Config.map("n", "<C-q>", ":copen<CR>", { silent = true, desc = "Open quickfix list" })
 Config.map("n", "<leader>cs", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
 Config.map("n", "<leader>ca", function()
+	if type(Config.ensure_lsp) == "function" then
+		Config.ensure_lsp()
+	end
 	vim.lsp.buf.code_action()
 end, { desc = "Code Action" })
 Config.map("n", "yp", function()
@@ -121,10 +164,10 @@ Config.map('i', '<C-v>', '<C-r><C-p>"', {
 Config.map('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
 
--- Config.map({'n', 't'}, '<C-_>', function() 
---   if vim.bo.buftype == 'terminal' then 
---     vim.cmd('close') 
---   else 
+-- Config.map({'n', 't'}, '<C-_>', function()
+--   if vim.bo.buftype == 'terminal' then
+--     vim.cmd('close')
+--   else
 --     vim.cmd('below 10split | terminal')
 --     vim.api.nvim_input('i')
 --   end

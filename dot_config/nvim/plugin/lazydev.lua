@@ -1,6 +1,6 @@
 -- lazydev
 Config.later(function()
-  vim.pack.add({ "https://github.com/folke/lazydev.nvim" }, { load = true })
+  vim.pack.add({ "https://github.com/folke/lazydev.nvim" })
 
   -- setup
   require("lazydev").setup({

@@ -21,3 +21,4 @@ Relevant Github Issue: [https://github.com/neovim/neovim/issues/35562]
 ## Picker
 Switched from mini pick -> telescope (sizing issues) -> fzf-lua -> snacks (initial load issues)
 would love to get fzf lua working, if not snacks is okay and telescope if needed ecosystem. just want the best and lightest
+

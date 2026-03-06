@@ -1,47 +1,37 @@
--- blink.cmp (commented out to try built-in completion)
--- vim.pack.add({ { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") } })
---
--- -- setup
--- require("blink.cmp").setup({
--- 	sources = {
--- 		-- add lazydev to your completion providers
--- 		default = { "lazydev", "lsp", "path", "snippets", "buffer" },
--- 		providers = {
--- 			lazydev = {
--- 				name = "LazyDev",
--- 				module = "lazydev.integrations.blink",
--- 				-- make lazydev completions top priority (see `:h blink.cmp`)
--- 				score_offset = 100,
--- 			},
--- 		},
--- 	},
--- })
+local blink_ready = false
 
--- built-in completion (Neovim 0.11+)
-Config.later(function()
-  vim.o.completeopt = "menuone,noselect,popup"
-
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if client:supports_method("textDocument/completion") then
-        -- trigger autocompletion on every printable keypress
-        local chars = {}
-        for i = 32, 126 do table.insert(chars, string.char(i)) end
-        client.server_capabilities.completionProvider.triggerCharacters = chars
-        vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-      end
-    end,
-  })
-end)
-
--- C-y confirms first item if nothing selected
-Config.map("i", "<C-y>", function()
-	if vim.fn.pumvisible() == 1 then
-		local info = vim.fn.complete_info({ "selected" })
-		if info.selected == -1 then
-			return "<C-n><C-y>"
-		end
+local function setup_blink()
+	if blink_ready then
+		return
 	end
-	return "<C-y>"
-end, { expr = true })
+	blink_ready = true
+
+	vim.pack.add({
+		{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+	}, { load = true })
+
+	local ok, blink = pcall(require, "blink.cmp")
+	if not ok then
+		return
+	end
+
+	blink.setup({
+		signature = {
+			enabled = false,
+		},
+		keymap = { preset = "default" },
+		sources = {
+			default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+			providers = {
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					score_offset = 100,
+				},
+			},
+		},
+	})
+end
+
+Config.on_event("InsertEnter", setup_blink)
+Config.on_event("CmdlineEnter", setup_blink)

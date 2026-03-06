@@ -10,7 +10,15 @@ Config.now_if_args(function()
 
 	-- Setup nvim-treesitter
 	local nts = require("nvim-treesitter")
-	nts.install(ts_parsers)
+	local missing_parsers = {}
+	for _, lang in ipairs(ts_parsers) do
+		if #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0 then
+			table.insert(missing_parsers, lang)
+		end
+	end
+	if #missing_parsers > 0 then
+		nts.install(missing_parsers)
+	end
 
 	-- Setup nvim-treesitter-textobjects (only for movement, mini.ai handles selection)
 	require("nvim-treesitter-textobjects").setup({
@@ -78,7 +86,15 @@ Config.now_if_args(function()
 	-- Autocmds
 	-- Auto-update parsers when plugins change
 	vim.api.nvim_create_autocmd('PackChanged', {
-		callback = function() nts.update() end
+		callback = function(ev)
+			local data = ev and ev.data or nil
+			if not data or not data.spec or data.spec.name ~= "nvim-treesitter" then
+				return
+			end
+			if data.kind == "update" then
+				nts.update()
+			end
+		end
 	})
 
 	vim.api.nvim_create_autocmd("FileType", {
