@@ -1,0 +1,12 @@
+{
+  "println debug": {
+    "prefix": "dp",
+    "body": "println!(\"{:?}\", ${1:value});",
+    "description": "Debug println"
+  },
+  "println": {
+    "prefix": "p",
+    "body": "println!(\"{}\", ${1:value});",
+    "description": "Display println"
+  }
+}

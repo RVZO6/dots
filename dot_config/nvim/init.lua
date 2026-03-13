@@ -1,9 +1,9 @@
--- Speed up module loading (0.9+; best when enabled very early)
+-- Bootstrap shared helpers first. The numbered plugin files then consume this API.
+
 if vim.loader then
-	vim.loader.enable()
+  vim.loader.enable()
 end
 
--- Disable unused built-in runtime plugins for faster startup
 vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zipPlugin = 1
@@ -12,202 +12,61 @@ vim.g.loaded_tutor = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Install mini.nvim for `mini.misc` loading helpers.
-vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
-
--- Define global config table for sharing between modules
 _G.Config = {}
 Config.map = vim.keymap.set
 
--- Define lazy helpers via mini.misc, following MiniMax's pattern.
-local misc = require("mini.misc")
-Config.now = function(f)
-	misc.safely("now", f)
-end
-Config.later = function(f)
-	misc.safely("later", f)
-end
+-- Load `mini.misc` early so the rest of the config can use safe scheduling helpers.
+vim.pack.add({ 'https://github.com/nvim-mini/mini.nvim' })
+
+local misc = require('mini.misc')
+Config.now = function(f) misc.safely('now', f) end
+Config.later = function(f) misc.safely('later', f) end
 Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
 
 local function safe_config_call(name, fn, ...)
-	local ok, err = pcall(fn, ...)
-	if ok then
-		return
-	end
+  local ok, err = pcall(fn, ...)
+  if ok then return end
 
-	vim.schedule(function()
-		vim.notify(("Config step failed (%s): %s"):format(name, err), vim.log.levels.ERROR)
-	end)
+  vim.schedule(function()
+    vim.notify(('Config step failed (%s): %s'):format(name, err), vim.log.levels.ERROR)
+  end)
+end
+
+local augroup = vim.api.nvim_create_augroup('config', {})
+
+-- Shared autocommand helpers keep later files small and consistent.
+Config.new_autocmd = function(event, pattern, callback, desc, opts)
+  local au_opts = vim.tbl_extend('force', {
+    group = augroup,
+    pattern = pattern,
+    callback = callback,
+    desc = desc,
+  }, opts or {})
+  vim.api.nvim_create_autocmd(event, au_opts)
 end
 
 Config.on_event = function(event, fn, opts)
-	local options = vim.tbl_extend("force", {
-		once = true,
-		callback = function(args)
-			safe_config_call("event:" .. event, fn, args)
-		end,
-	}, opts or {})
-	vim.api.nvim_create_autocmd(event, options)
+  local options = vim.tbl_extend('force', {
+    once = true,
+    callback = function(args)
+      safe_config_call('event:' .. event, fn, args)
+    end,
+  }, opts or {})
+  vim.api.nvim_create_autocmd(event, options)
 end
 
 Config.on_filetype = function(filetypes, fn, opts)
-	local options = vim.tbl_extend("force", { pattern = filetypes }, opts or {})
-	Config.on_event("FileType", fn, options)
+  local options = vim.tbl_extend('force', { pattern = filetypes }, opts or {})
+  Config.on_event('FileType', fn, options)
 end
 
--- options
--- vim.opt.termguicolors = false
-vim.g.mapleader = " "
-vim.opt.swapfile = false
-vim.opt.relativenumber = true
-vim.opt.winborder = "single"
-vim.opt.spell = true
-vim.opt.splitright = true
-vim.opt.pumborder = "single"
-vim.opt.cmdheight = 0
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.laststatus = 3
-vim.opt.cursorcolumn = false
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.smartindent = true
--- text wrapping -- maybe int make only md/text files??
-vim.opt.wrap = true
-vim.opt.linebreak = true
--- vim.opt.mouse = "" -- disable mouse (vim hard mode)
--- vim.opt.clipboard = "unnamedplus"
--- trying system clipboard as <space> + y/d
--- consider have <leader>y = normal and y is +y???
-Config.map({ "n", "x" }, "<leader>y", '"+y')
-Config.map({ "n", "x" }, "<leader>d", '"+d')
-vim.opt.ignorecase = true -- mainly for fuzzy finders
-vim.opt.undofile = true
-vim.opt.fillchars = {
-	eob = " ",
-}
--- insert the recording status into the statusline
-vim.opt.statusline = vim.o.statusline:gsub(
-	"%%m",
-	"%%m %%{reg_recording()!=''?' @'.reg_recording():''}"
-)
-
--------KEY MAPS-------
-
-Config.map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
--- Wrap to avoid forcing LSP to load during startup
-Config.map({ "n", "v", "x" }, "<leader>cf", function()
-	if type(Config.ensure_conform) == "function" then
-		Config.ensure_conform()
-	end
-
-	local ok, conform = pcall(require, "conform")
-	if ok then
-		conform.format({ async = true, lsp_format = "fallback" })
-		return
-	end
-
-	if type(Config.ensure_lsp) == "function" then
-		Config.ensure_lsp()
-	end
-	vim.lsp.buf.format({ async = true })
-end, { desc = "Format current buffer" })
--- remap = true makes it so that subsequent binds work, e.g. <leader>wd
-Config.map("n", "<leader>w", "<C-w>", { remap = true, desc = "window management" })
-Config.map({ "n", "v", "x" }, "<C-c>", "<cmd>quitall!<CR>", { desc = "Save buffer" })
-
--- mark stuff
-Config.map("n", "<C-m>", "`")
-
--- tab management
-Config.map({ "n", "t" }, "<Leader>t", "<Cmd>tabnew<CR>")
-Config.map({ "n", "t" }, "<Leader>x", "<Cmd>tabclose<CR>")
-for i = 1, 8 do
-	Config.map({ "n", "t" }, "<Leader>" .. i, "<Cmd>tabnext " .. i .. "<CR>")
+-- `after/lsp/*.lua` gets these PackChanged hooks to react to plugin updates.
+Config.on_packchanged = function(plugin_name, kinds, callback, desc)
+  local f = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then return end
+    if not ev.data.active then vim.cmd.packadd(plugin_name) end
+    callback()
+  end
+  Config.new_autocmd('PackChanged', '*', f, desc)
 end
-
--- swap ; and : for *ergonomics*
-Config.map({ "n", "v", "x" }, ";", ":")
-Config.map({ "n", "v", "x" }, ":", ";")
-
--- normal mode improvements
-Config.map("v", ".", "norm! .", { desc = "Repeat last normal mode command in visual" })
-Config.map("n", "gK", "kJ", { desc = "Join line above to current line" })
-Config.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-Config.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-
--- keep cursor centered when scrolling/searching
-Config.map("n", "<C-d>", "<C-d>zz")
-Config.map("n", "<C-u>", "<C-u>zz")
-Config.map("n", "n", "nzzzv")
-Config.map("n", "N", "Nzzzv")
-
--- quick actions
-Config.map("n", "<leader>a", ":edit #<CR>", { desc = "Jump to alternate file" })
-Config.map("n", "<C-q>", ":copen<CR>", { silent = true, desc = "Open quickfix list" })
-Config.map("n", "<leader>cs", "1z=", { desc = "Auto-fix spelling (first suggestion)" })
-Config.map("n", "<leader>ca", function()
-	if type(Config.ensure_lsp) == "function" then
-		Config.ensure_lsp()
-	end
-	vim.lsp.buf.code_action()
-end, { desc = "Code Action" })
-Config.map("n", "yp", function()
-	vim.fn.setreg("+", vim.fn.expand("%:p:~"))
-end, { desc = "Yank path with ~" })
-Config.map('i', '<C-v>', '<C-r><C-p>"', {
-	noremap = true,
-	silent = true,
-	desc = "Paste from default register with fixed indentation"
-})
--- enter normal mode easier in terminal but this kinda sucks
-Config.map('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
-
-
--- Config.map({'n', 't'}, '<C-_>', function()
---   if vim.bo.buftype == 'terminal' then
---     vim.cmd('close')
---   else
---     vim.cmd('below 10split | terminal')
---     vim.api.nvim_input('i')
---   end
--- end)
-
-Config.map("n", "<leader>us", function()
-	-- Use vim.wo (window option) because 'spell' is a window-local setting
-	vim.wo.spell = not vim.wo.spell
-end, { desc = "Toggle Spell Check" })
-
--- paste above and below
-Config.map("n", "[p", '<Cmd>exe "put! " . v:register<CR>', { desc = "Paste Above" })
-Config.map("n", "]p", '<Cmd>exe "put "  . v:register<CR>', { desc = "Paste Below" })
-
-------AUTO COMMANDS (mostly) --------
-
--- no hl on insert OR if press esc
-vim.api.nvim_create_autocmd('InsertEnter', {
-	pattern = '*',
-	command = 'set nohlsearch',
-})
-vim.keymap.set('n', '<Esc>', '<Cmd>nohlsearch<CR>', { desc = "Clear search highlights" })
-
---hl yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight yanked text",
-	callback = function()
-		vim.hl.on_yank({
-			higroup = "DiffText",
-			timeout = 150,
-		})
-	end,
-})
-
--- help windows on right
-vim.api.nvim_create_autocmd("BufWinEnter", {
-	pattern = "*",
-	callback = function()
-		if vim.bo.buftype == 'help' then
-			vim.cmd("wincmd L")
-		end
-	end,
-})
